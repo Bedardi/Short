@@ -82,7 +82,7 @@
     
     <footer class="text-center py-4 text-gray-600 dark:text-gray-400">© 2025 MistaHub | Powered by <span class="font-bold text-indigo-600 dark:text-indigo-400">Bedardi Bhai</span></footer>
 
-    <!-- Firebase SDK and Custom JS (Combined in Module with Environment Variables) -->
+    <!-- Firebase SDK and Custom JS (Combined in Module with Enhanced Debug) -->
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -90,18 +90,28 @@
 
         // Fetch Firebase config from secret environment variables
         const firebaseConfig = {
-            apiKey: import.meta.env.FIREBASE_API_KEY,
-            authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
-            databaseURL: import.meta.env.FIREBASE_DATABASE_URL,
-            projectId: import.meta.env.FIREBASE_PROJECT_ID,
-            storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: import.meta.env.FIREBASE_MESSAGING_SENDER_ID,
-            appId: import.meta.env.FIREBASE_APP_ID
+            apiKey: import.meta.env.FIREBASE_API_KEY || 'MISSING_API_KEY',
+            authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN || 'MISSING_AUTH_DOMAIN',
+            databaseURL: import.meta.env.FIREBASE_DATABASE_URL || 'MISSING_DATABASE_URL',
+            projectId: import.meta.env.FIREBASE_PROJECT_ID || 'MISSING_PROJECT_ID',
+            storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET || 'MISSING_STORAGE_BUCKET',
+            messagingSenderId: import.meta.env.FIREBASE_MESSAGING_SENDER_ID || 'MISSING_MESSAGING_SENDER_ID',
+            appId: import.meta.env.FIREBASE_APP_ID || 'MISSING_APP_ID'
         };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        // Debug: Log config to verify secrets
+        console.log('Firebase Config:', firebaseConfig);
+
+        try {
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            console.log('Firebase App Initialized:', app);
+            const db = getDatabase(app);
+            console.log('Database Initialized:', db);
+        } catch (error) {
+            console.error('Firebase Initialization Error:', error);
+        }
+
         const DOMAIN = 'https://bhai.pages.dev';
 
         // Theme Toggle
@@ -165,6 +175,7 @@
                 `;
                 alert('URL shortened successfully!');
             } catch (error) {
+                console.error('Shorten Error:', error); // Debug log
                 alert('Failed to shorten URL: ' + error.message);
             }
         };
@@ -200,6 +211,7 @@
                     alert('Short code not found');
                 }
             } catch (error) {
+                console.error('Analytics Error:', error); // Debug log
                 alert('Failed to fetch analytics: ' + error.message);
             }
         };
@@ -211,6 +223,7 @@
                 setTimeout(() => button.classList.remove('copied'), 2000);
                 alert('Short URL copied to clipboard!');
             }).catch(err => {
+                console.error('Copy Error:', err); // Debug log
                 alert('Failed to copy URL: ' + err.message);
             });
         };
@@ -245,6 +258,7 @@
                         document.body.innerHTML = '<h1 class="text-center text-2xl font-bold text-gray-800 dark:text-gray-200 mt-8">URL Not Found</h1><p class="text-center text-gray-600 dark:text-gray-400">Sorry, the requested URL does not exist.</p>';
                     }
                 } catch (error) {
+                    console.error('Redirect Error:', error); // Debug log
                     document.body.innerHTML = `<h1 class="text-center text-2xl font-bold text-gray-800 dark:text-gray-200 mt-8">Error</h1><p class="text-center text-gray-600 dark:text-gray-400">An error occurred: ${error.message}</p>`;
                 }
             }

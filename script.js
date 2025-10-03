@@ -15,13 +15,15 @@ const firebaseConfig = {
     apiKey: "AIzaSyB0NUK3sawGjEs0orsmZmFuGm-OP1_8gYQ",
     authDomain: "computer-course-6bf66.firebaseapp.com",
     databaseURL: "https://computer-course-6bf66-default-rtdb.firebaseio.com",
-    projectId: "341786723203",
+    projectId: "computer-course-6bf66",
     storageBucket: "computer-course-6bf66.appspot.com",
     messagingSenderId: "341786723203",
-    appId: "1:341786723203:android:b4a01068b77aa8cc90acb6"
+    appId: "1:341786723203:web:b4a01068b77aa8cc90acb6" // Fixed: Use web appId
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.getDatabase(app);
 const DOMAIN = 'https://bhai.pages.dev';
 
 async function shortenUrl() {
@@ -37,11 +39,12 @@ async function shortenUrl() {
         return;
     }
     try {
+        const ref = db.ref('urls');
         let shortCode;
         let exists;
         do {
             shortCode = Math.random().toString(36).substring(2, 8);
-            exists = await db.ref('urls/' + shortCode).once('value');
+            exists = await ref.child(shortCode).once('value');
         } while (exists.exists());
         let expiry = null;
         if (expiration !== 'unlimited') {
@@ -59,7 +62,7 @@ async function shortenUrl() {
             expiry,
             trackEnabled: enableTracking
         };
-        await db.ref('urls/' + shortCode).set(data);
+        await ref.child(shortCode).set(data);
         const shortUrl = `${DOMAIN}/${shortCode}`;
         document.getElementById('result').innerHTML = `
             <p class="text-green-600 dark:text-green-400">

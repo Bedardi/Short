@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MistaHub Short URL Service by Bedardi Bhai - Create and track short URLs with ease. Fast, reliable, and free.">
+    <meta name="keywords" content="URL shortener, MistaHub, Bedardi Bhai, short URL, link tracking, free URL shortener">
+    <meta name="author" content="MistaHub">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="MistaHub Short URL Service by Bedardi Bhai">
+    <meta property="og:description" content="Shorten and track URLs with MistaHub's free service, powered by Bedardi Bhai.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bhai.pages.dev">
+    <meta property="og:image" content="https://bhai.pages.dev/og-image.jpg">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MistaHub Short URL Service by Bedardi Bhai">
+    <meta name="twitter:description" content="Shorten and track URLs with MistaHub. Fast and free, by Bedardi Bhai.">
+    <meta name="twitter:image" content="https://bhai.pages.dev/og-image.jpg">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <title>MistaHub Short URL Service by Bedardi Bhai</title>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 transition-colors duration-300">
+    <header class="bg-indigo-600 text-white text-center py-8">
+        <h1 class="text-5xl font-extrabold tracking-tight animate-pulse">MistaHub</h1>
+        <p class="mt-2 text-xl font-medium">Short URL Service Powered by <span class="font-bold text-green-300">Bedardi Bhai</span></p>
+        <button id="themeToggle" class="mt-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+        </button>
+    </header>
+    
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+        <!-- Shorten URL Section -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 transition-all duration-300">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Shorten Your URL</h2>
+            <div class="mb-4">
+                <label for="longUrl" class="block text-gray-700 dark:text-gray-300 mb-2">Enter Long URL</label>
+                <input id="longUrl" type="url" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200" placeholder="https://example.com/very/long">
+            </div>
+            <div class="mb-4">
+                <label for="expiration" class="block text-gray-700 dark:text-gray-300 mb-2">URL Validity</label>
+                <select id="expiration" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                    <option value="unlimited" selected>Unlimited</option>
+                    <option value="1hour">1 Hour</option>
+                    <option value="12hour">12 Hours</option>
+                    <option value="1day">1 Day</option>
+                    <option value="3day">3 Days</option>
+                    <option value="15day">15 Days</option>
+                    <option value="1month">1 Month</option>
+                    <option value="3month">3 Months</option>
+                    <option value="6month">6 Months</option>
+                    <option value="1year">1 Year</option>
+                </select>
+            </div>
+            <label class="flex items-center mb-4">
+                <input type="checkbox" id="enableTracking" checked class="mr-2">
+                <span class="text-gray-700 dark:text-gray-300">Enable Tracking (Clicks, IP, etc.)</span>
+            </label>
+            <button onclick="shortenUrl()" class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition duration-300">Shorten Now</button>
+            <div id="result" class="mt-4"></div>
+        </div>
+        
+        <!-- Analytics Section -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-all duration-300">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Track Your Short URL</h2>
+            <div class="mb-4">
+                <label for="shortCode" class="block text-gray-700 dark:text-gray-300 mb-2">Enter Short Code</label>
+                <input id="shortCode" type="text" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200" placeholder="abc123">
+            </div>
+            <button onclick="getAnalytics()" class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition duration-300">View Analytics</button>
+            <div id="analytics-result" class="mt-4"></div>
+        </div>
+    </div>
+    
+    <footer class="text-center py-4 text-gray-600 dark:text-gray-400">© 2025 MistaHub | Powered by <span class="font-bold text-indigo-600 dark:text-indigo-400">Bedardi Bhai</span></footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <!-- Schema.org Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MistaHub Short URL Service by Bedardi Bhai",
+        "url": "https://bhai.pages.dev",
+        "description": "Shorten and track URLs with MistaHub's free URL shortener, powered by Bedardi Bhai.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "MistaHub",
+            "founder": "Bedardi Bhai"
+        }
+    }
+    </script>
+</body>
+</html>

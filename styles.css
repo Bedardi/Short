@@ -1,0 +1,49 @@
+/* Custom styles to complement Tailwind */
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+#result a {
+    color: #4f46e5;
+    font-weight: 500;
+}
+#result a:hover {
+    text-decoration: underline;
+}
+.copy-btn {
+    position: relative;
+    margin-left: 0.5rem;
+}
+.copy-btn::after {
+    content: 'Copied!';
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4f46e5;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.copy-btn.copied::after {
+    opacity: 1;
+}
+#analytics-result ul {
+    list-style: none;
+    padding: 0;
+}
+#analytics-result ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+#analytics-result ul li:last-child {
+    border-bottom: none;
+}
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
